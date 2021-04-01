@@ -10,13 +10,14 @@ contract Election {
         uint voteCount;
     }
 
-    mapping(uint => Candidate) public candidateLookup;
-    mapping(address => bool) public voterLookup;
-    
-
     uint public candidateCount;
     uint public totalVotes;
     uint private maxVotes;
+
+    mapping(uint => Candidate) public candidateLookup;
+    mapping(address => bool) public voterLookup;
+
+    event votedEvent(uint indexed id);
 
     function addCandidate(string memory name) public {
         candidateLookup[candidateCount] = Candidate(candidateCount, name, 0);
@@ -55,6 +56,4 @@ contract Election {
         voterLookup[msg.sender] = true;
         emit votedEvent(id);
     }
-
-    event votedEvent(uint indexed id);
 }
