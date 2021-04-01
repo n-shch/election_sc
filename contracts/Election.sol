@@ -12,15 +12,19 @@ contract Election {
 
     mapping(uint => Candidate) public candidateLookup;
     mapping(address => bool) public voterLookup;
+    
 
     uint public candidateCount;
+    uint public totalVotes;
+    uint private maxVotes;
 
     function addCandidate(string memory name) public {
         candidateLookup[candidateCount] = Candidate(candidateCount, name, 0);
         candidateCount++;
     }
 
-    constructor() public {
+    constructor(uint votersAmount) public {
+        maxVotes = votersAmount;
         addCandidate("kitty");
         addCandidate("doggy");
     }
@@ -42,12 +46,14 @@ contract Election {
     }
 
     function vote(uint id) external {
+        require(totalVotes < maxVotes);
         require(!voterLookup[msg.sender]);
         require(id >= 0 && id <= candidateCount - 1);
         candidateLookup[id].voteCount++;
+        totalVotes++;
         voterLookup[msg.sender] = true;
         emit votedEvent(id);
     }
-    
+
     event votedEvent(uint indexed id);
 }
