@@ -24,6 +24,7 @@ contract Election {
     }
 
     constructor(uint votersAmount) public {
+        require(votersAmount < 10);
         maxVotes = votersAmount;
         addCandidate("kitty");
         addCandidate("doggy");
