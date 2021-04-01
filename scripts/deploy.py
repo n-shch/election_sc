@@ -4,4 +4,4 @@ from brownie import *
 
 
 def main():
-    return accounts[0].deploy(Election)
+    return Election.deploy("Alise", 1, {'from': accounts[0]})

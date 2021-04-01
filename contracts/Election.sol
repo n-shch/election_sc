@@ -17,7 +17,7 @@ contract Election {
 
     event votedEvent();
 
-    function addCandidate(string memory name) public {
+    function addCandidate(string memory name) private {
         votingObject = Candidate(name, 0);
     }
 
